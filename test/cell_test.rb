@@ -31,4 +31,20 @@ class CellTest < Minitest::Test
     assert_equal @ship, @cell.ship
   end
 
+  def test_cell_fired_upon
+    assert_equal false, @cell.fired_upon?
+    @cell.fire_upon
+    assert_equal true, @cell.fired_upon?
+    #checking it remains true if fired upon repeatedly
+    @cell.fire_upon
+    assert_equal true, @cell.fired_upon?
+  end
+
+  def test_ship_fired_upon
+    @cell.place_ship(@ship)
+    @cell.fire_upon
+    assert_equal true, @cell.fired_upon?
+    assert_equal 2, @cell.ship.health
+  end
+
 end
