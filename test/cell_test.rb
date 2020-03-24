@@ -47,4 +47,26 @@ class CellTest < Minitest::Test
     assert_equal 2, @cell.ship.health
   end
 
+  def test_empty_cell_rendering
+    assert_equal ".", @cell.render
+    @cell.fire_upon
+    assert_equal "M", @cell.render
+  end
+
+  def test_ship_cell_rendering
+    @cell.place_ship(@ship)
+    assert_equal ".", @cell.render
+    assert_equal "S", @cell.render(true)
+    @cell.fire_upon
+    assert_equal "H", @cell.render
+  end
+
+  def test_sunk_cell_rendering
+    @cell.place_ship(@ship)
+    @cell.ship.hit
+    @cell.ship.hit
+    @cell.fire_upon
+    assert_equal "X", @cell.render
+  end
+
 end

@@ -28,4 +28,18 @@ class Cell
     end
   end
 
+  def render(show_ship = false)
+    if !fired_upon? && (show_ship && !empty?)
+      return "S"
+    elsif !fired_upon?
+      return "."
+    elsif fired_upon? && empty?
+      return "M"
+    elsif fired_upon? && @ship.sunk?
+      return "X"
+    else
+      return "H"
+    end
+  end
+
 end
