@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship.rb'
 
-class PlayerTest < Minitest::Test
+class ShipTest < Minitest::Test
 
   def test_ship_exists
     ship = Ship.new("Cruiser", 3)
