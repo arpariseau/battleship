@@ -18,4 +18,11 @@ class PlayerTest < Minitest::Test
     assert_equal 3, ship.health
   end
 
+  def test_ship_full_health_has_sunk
+    ship = Ship.new("Cruiser", 3)
+
+    assert_equal false, ship.sunk?
+  end
+
+
 end
