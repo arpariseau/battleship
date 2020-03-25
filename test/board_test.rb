@@ -15,6 +15,15 @@ class BoardTest < Minitest::Test
     board = Board.new
 
     assert_equal 16, board.cells.keys.length
+    assert_equal 16, board.cells.values.length
+    assert_instance_of Cell, board.cells.values[0]
+    assert_instance_of Cell, board.cells.values[15]
   end
 
+  def test_can_validate_coordinates
+    board = Board.new
+
+    assert_equal true, board.valid_coordinate?("A1")
+    assert_equal false, board.valid_coordinate?("A5")
+  end
 end
