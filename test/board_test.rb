@@ -48,4 +48,34 @@ class BoardTest < Minitest::Test
     assert_equal true, @board.cons_placement?(["A3", "A4"])
   end
 
+  def test_can_validate_placement_with_vaild_placement
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    assert_equal false, @board.valid_placement?(submarine,["A1", "B2"])
+    assert_equal false, @board.valid_placement?(cruiser,["A1", "A3", "A4"])
+    assert_equal false, @board.valid_placement?(cruiser,["A1", "C1", "D1"])
+    assert_equal true, @board.valid_placement?(submarine,["A3", "A4"])
+    assert_equal true, @board.valid_placement?(cruiser,["B1","C1","D1"])
+  end
+
+  def test_can_place_ship
+    cruiser = Ship.new("Cruiser", 3)
+    @board.place(cruiser, ["A1", "A2", "A3"])
+    assert_equal cruiser, @board.cells["A1"].ship
+    assert_equal cruiser, @board.cells["A2"].ship
+    assert_equal cruiser, @board.cells["A3"].ship
+  end
+
+  def test_placement_is_empty
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    assert_equal true, @board.valid_placement?(cruiser, ["A1", "A2", "A3"])
+    @board.place(cruiser, ["A1", "A2", "A3"])
+    assert_equal false, @board.valid_placement?(submarine,["A1", "A2"])
+  end
+
+
+
+
+
 end
