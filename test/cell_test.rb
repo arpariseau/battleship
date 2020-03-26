@@ -45,6 +45,9 @@ class CellTest < Minitest::Test
     @cell.fire_upon
     assert_equal true, @cell.fired_upon?
     assert_equal 2, @cell.ship.health
+    @cell.fire_upon
+    assert_equal 2, @cell.ship.health
+
   end
 
   def test_empty_cell_rendering
