@@ -25,8 +25,8 @@ class Board
       false
     elsif !coords.map {|coord| valid_coordinate?(coord)}.all?
       false
-#    elsif !cons_placement?(coords)
-#      false
+    elsif !cons_placement?(coords)
+      false
     else
       true
     end
@@ -36,21 +36,20 @@ class Board
     rows = []
     cols = []
     coords.each do |coord|
-      row = coord[0]
-      rows << row
-      col = coord[1].to_i
-      cols << col
+      rows << coord[0]
+      cols << coord[1].to_i
     end
-#    binding.pry
+    horiz_check = (cols.first..cols.last).to_a
+    vert_check = (rows.first..rows.last).to_a
+    binding.pry
     if rows.uniq.length > 1 && cols.uniq.length > 1
-     false
-    elsif rows.uniq.length == 1
-  #   binding.pry
-  #   horizontal_cons(cols)
-     false
+      false
+    elsif rows.uniq.length == 1 && cols != horiz_check
+      false
+    elsif cols.uniq.length == 1 && rows != vert_check
+      false
     else
-  #   vertical_cons(rows)
-     false
+      true
     end
   end
 
