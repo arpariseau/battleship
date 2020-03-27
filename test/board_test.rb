@@ -48,9 +48,10 @@ class BoardTest < Minitest::Test
     assert_equal true, @board.cons_placement?(["A3", "A4"])
   end
 
-  def test_can_validate_placement_with_vaild_placement
+  def test_can_validate_cons_placement_with_valid_placement
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
+
     assert_equal false, @board.valid_placement?(submarine,["A1", "B2"])
     assert_equal false, @board.valid_placement?(cruiser,["A1", "A3", "A4"])
     assert_equal false, @board.valid_placement?(cruiser,["A1", "C1", "D1"])
@@ -61,6 +62,7 @@ class BoardTest < Minitest::Test
   def test_can_place_ship
     cruiser = Ship.new("Cruiser", 3)
     @board.place(cruiser, ["A1", "A2", "A3"])
+
     assert_equal cruiser, @board.cells["A1"].ship
     assert_equal cruiser, @board.cells["A2"].ship
     assert_equal cruiser, @board.cells["A3"].ship
@@ -69,24 +71,35 @@ class BoardTest < Minitest::Test
   def test_placement_is_empty
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
+
     assert_equal true, @board.valid_placement?(cruiser, ["A1", "A2", "A3"])
+
     @board.place(cruiser, ["A1", "A2", "A3"])
+
     assert_equal false, @board.valid_placement?(submarine,["A1", "A2"])
   end
 
   def test_can_render
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
-    @board.render
+
     @board.place(cruiser, ["A1", "A2", "A3"])
+    @board.place(submarine, ["C1", "D1"])
+    @board.render
     @board.render(true)
     @board.cells["A1"].fire_upon
-    @board.cells["B1"].fire_upon
+    @board.cells["B4"].fire_upon
+    @board.render
     @board.render(true)
-    @board.cells["A2"].fire_upon
-    @board.cells["A3"].fire_upon
+    @board.cells["C1"].fire_upon
+    @board.cells["D1"].fire_upon
+    @board.render
     @board.render(true)
-
-
   end
+
+  def test_flexible_board_definition
+    sixboard = Board.new(6, 6)
+    assert_includes sixboard.cells.keys, "F6"
+  end
+
 end

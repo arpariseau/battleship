@@ -5,16 +5,24 @@ require "pry"
 class Board
   attr_reader :cells, :ships
 
-  def initialize
-    coord = ["A1", "A2", "A3", "A4",
-             "B1", "B2", "B3", "B4",
-             "C1", "C2", "C3", "C4",
-             "D1", "D2", "D3", "D4"]
+  def initialize(height = 4, width = 4)
     @ships = {}
     @cells = {}
-      coord.each do |coord|
-        @cells[coord] = Cell.new(coord)
+    make_cells(height, width)
+  end
+
+  def make_cells(height, width)
+    horiz = 1..width
+    vert = ("A".ord..(("A".ord - 1) + height)).map {|num| num.chr}
+    grid = horiz.map do |num|
+      vert.map do |ltr|
+        ltr + num.to_s
       end
+    end
+    coords = grid.flatten
+    coords.each do |coord|
+      @cells[coord] = Cell.new(coord)
+    end
   end
 
   def valid_coordinate?(cell)

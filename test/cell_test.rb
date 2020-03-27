@@ -24,6 +24,8 @@ class CellTest < Minitest::Test
 
   def test_emptiness
     assert_equal true, @cell.empty?
+    @cell.place_ship(@ship)
+    assert_equal false, @cell.empty?
   end
 
   def test_ship_placement
@@ -35,7 +37,6 @@ class CellTest < Minitest::Test
     assert_equal false, @cell.fired_upon?
     @cell.fire_upon
     assert_equal true, @cell.fired_upon?
-    #checking it remains true if fired upon repeatedly
     @cell.fire_upon
     assert_equal true, @cell.fired_upon?
   end
@@ -47,7 +48,6 @@ class CellTest < Minitest::Test
     assert_equal 2, @cell.ship.health
     @cell.fire_upon
     assert_equal 2, @cell.ship.health
-
   end
 
   def test_empty_cell_rendering
