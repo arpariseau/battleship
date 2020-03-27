@@ -2,7 +2,9 @@ require 'pry'
 require './lib/board.rb'
 
 class Computer
-  def initialize()
+  attr_reader :board, :shots
+
+  def initialize
     @board = Board.new
     @shots = []
   end
