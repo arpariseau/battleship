@@ -39,19 +39,25 @@ class Computer
   end
 
   def valid_shot?(coord)
-    #check if coordinate argument is in @shots array
-    #if not, return true, if it is, return false
+    if @shots.include?(coord)
+      false
+    else
+      true
+    end
   end
 
   def attack
-    #get random coordinate
-    #use valid_shot? to check and make sure it can be
-    #fired upon, if true, then return the coordinate
-    #be able to rerun automatically if valid_shot? is false
+    target = get_random_coordinate
+
+    if valid_shot?(target)
+      @board.cells[target].fire_upon
+      @shots << target
+    else
+      attack
+    end
   end
 
   def get_random_coordinate
     @board.cells.keys.shuffle[0]
   end
-
 end

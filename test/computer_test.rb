@@ -46,4 +46,16 @@ class ComputerTest < Minitest::Test
  def test_gets_horiz_array
    assert_equal ["A1", "A2", "A3"], @computer.horiz_place_check(3, "A1")
  end
+
+ def test_can_valid_shot?
+   assert_equal true, @computer.valid_shot?("A1")
+   @computer.shots << "A1"
+   assert_equal false, @computer.valid_shot?("A1")
+ end
+
+ def test_can_attack
+   assert_equal [], @computer.shots
+   @computer.attack
+   assert_equal 1, @computer.shots.length
+ end
 end
