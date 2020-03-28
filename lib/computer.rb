@@ -10,10 +10,10 @@ class Computer
   end
 
   def place_ship(ship)
-    start_coord = get_random_coordinate
     place_orient = rand(0..1)
     place_coords = []
     until @board.ships.include?(ship.name)
+      start_coord = get_random_coordinate
       if place_orient == 0
         place_coords = horiz_place_check(ship.length, start_coord)
         @board.place(ship, place_coords)

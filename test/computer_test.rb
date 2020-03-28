@@ -27,7 +27,7 @@ class ComputerTest < Minitest::Test
  end
 
  def test_can_place_ships
-   skip
+
    cruiser = Ship.new("Cruiser", 3)
    submarine = Ship.new("Submarine", 2)
 
@@ -35,6 +35,8 @@ class ComputerTest < Minitest::Test
    @computer.place_ship(submarine)
 
    assert_equal 2, @computer.board.ships.keys.length
+   @computer.board.render(true)
+
  end
 
  def test_gets_vert_array
