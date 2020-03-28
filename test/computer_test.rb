@@ -7,15 +7,32 @@ require './lib/computer.rb'
 
 class ComputerTest < Minitest::Test
 
+ def setup
+   @computer = Computer.new
+ end
+
  def test_it_exists
-   computer = Computer.new
-   assert_instance_of Computer, computer
+   assert_instance_of Computer, @computer
  end
 
  def test_it_has_attributes
-   computer = Computer.new
+   assert_instance_of Board, @computer.board
+   assert_equal [], @computer.shots
+ end
 
-   assert_instance_of Board, computer.board
-   assert_equal [], computer.shots
+ def test_can_get_random_coordinate
+   rng = @computer.get_random_coordinate
+   puts rng
+   assert_includes @computer.board.cells.keys, rng
+ end
+
+ def test_can_place_ships
+   cruiser = Ship.new("Cruiser", 3)
+   submarine = Ship.new("Submarine", 2)
+
+   @computer.place_ship(cruiser)
+   @computer.place_ship(submarine)
+
+   assert_equal 2, @computer.board.ships.keys.length
  end
 end
