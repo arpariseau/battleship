@@ -25,11 +25,17 @@ class Computer
   end
 
   def horiz_place_check(ship_length, start_coord)
-    #return array of valid coordinates
+    start_num = start_coord[1].to_i
+    (start_num..((start_num - 1) + ship_length)).map do |num|
+      start_coord[0] + num.to_s
+    end
   end
 
   def vert_place_check(ship_length, start_coord)
-    #return array of valid coordinates
+    start_ltr = start_coord[0]
+    (start_ltr.ord..((start_ltr.ord - 1) + ship_length)).map do |ltr|
+      ltr.chr + start_coord[1]
+    end
   end
 
   def valid_shot?(coord)
