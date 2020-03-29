@@ -4,8 +4,8 @@ require './lib/board.rb'
 class Computer
   attr_reader :board, :shots
 
-  def initialize
-    @board = Board.new
+  def initialize(height = 4, width = 4)
+    @board = Board.new(height, width)
     @shots = []
   end
 
@@ -58,5 +58,5 @@ class Computer
   def get_random_coordinate
     @board.cells.keys.shuffle[0]
   end
-  
+
 end
