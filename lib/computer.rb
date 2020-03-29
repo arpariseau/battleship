@@ -10,9 +10,8 @@ class Computer
   end
 
   def place_ship(ship)
-    place_orient = rand(0..1)
-    place_coords = []
     until @board.ships.include?(ship.name)
+      place_orient = rand(0..1)
       start_coord = get_random_coordinate
       if place_orient == 0
         place_coords = horiz_place_check(ship.length, start_coord)
@@ -48,7 +47,6 @@ class Computer
 
   def attack
     target = get_random_coordinate
-
     if valid_shot?(target)
       @board.cells[target].fire_upon
       @shots << target
@@ -60,4 +58,5 @@ class Computer
   def get_random_coordinate
     @board.cells.keys.shuffle[0]
   end
+  
 end
