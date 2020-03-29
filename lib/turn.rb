@@ -11,7 +11,28 @@ class Turn
     @player_shots = []
   end
 
-  def setup
+  def setup(ships)
+    p "I have laid out my ships on the grid."
+    p "You now need to lay out your #{ships.length} ships."
+    ships.each do |ship|
+      player_placement(ship)
+      @computer.place_ship(ship)
+    end
+  end
+
+  def player_placement(ship)
+    p "The #{ship.name} is #{ship.length} units long."
+    print @player_board.render(true).join
+    p "Enter the squares for the #{ship.name} (#{ship.length} spaces):"
+    player_coord = gets.chomp.upcase.split
+    player_coord.sort
+    until @player_board.valid_placement?(ship, player_coord)
+      print @player_board.render(true).join
+      p "Those are invalid coordinates. Please try again:"
+      player_coord = gets.chomp.upcase.split
+      player_coord.sort
+    end
+    @player_board.place(ship, player_coord)
   end
 
   def start

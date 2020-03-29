@@ -7,18 +7,30 @@ require './lib/computer.rb'
 require './lib/turn.rb'
 
 class TurnTest < Minitest::Test
-  def test_it_exists
-    turn = Turn.new
+  def setup
+    @turn = Turn.new
+  end
 
-    assert_instance_of Turn, turn
+  def test_it_exists
+    assert_instance_of Turn, @turn
   end
 
   def test_it_has_attributes
-    turn = Turn.new
-
-    assert_instance_of Board, turn.player_board
-    assert_instance_of Computer, turn.computer
-    assert_equal [], turn.player_shots
+    assert_instance_of Board, @turn.player_board
+    assert_instance_of Computer, @turn.computer
+    assert_equal [], @turn.player_shots
   end
+
+  def test_can_setup
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    @turn.setup([cruiser, submarine])
+    assert_equal 2, @turn.player_board.ships.length
+    assert_equal 2, @turn.computer.board.ships.length
+  end
+
+
+
 
 end
