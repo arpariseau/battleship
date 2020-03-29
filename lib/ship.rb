@@ -1,4 +1,3 @@
-
 class Ship
   attr_reader :name, :length, :health
 
@@ -17,4 +16,5 @@ class Ship
       @health -= 1
     end
   end
+  
 end

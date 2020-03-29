@@ -22,12 +22,10 @@ class ComputerTest < Minitest::Test
 
  def test_can_get_random_coordinate
    rng = @computer.get_random_coordinate
-   puts rng
    assert_includes @computer.board.cells.keys, rng
  end
 
  def test_can_place_ships
-
    cruiser = Ship.new("Cruiser", 3)
    submarine = Ship.new("Submarine", 2)
 
@@ -36,7 +34,6 @@ class ComputerTest < Minitest::Test
 
    assert_equal 2, @computer.board.ships.keys.length
    @computer.board.render(true)
-
  end
 
  def test_gets_vert_array
@@ -47,7 +44,7 @@ class ComputerTest < Minitest::Test
    assert_equal ["A1", "A2", "A3"], @computer.horiz_place_check(3, "A1")
  end
 
- def test_can_valid_shot?
+ def test_can_validate_shot
    assert_equal true, @computer.valid_shot?("A1")
    @computer.shots << "A1"
    assert_equal false, @computer.valid_shot?("A1")

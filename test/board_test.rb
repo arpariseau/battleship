@@ -85,16 +85,17 @@ class BoardTest < Minitest::Test
 
     @board.place(cruiser, ["A1", "A2", "A3"])
     @board.place(submarine, ["C1", "D1"])
-    @board.render
-    @board.render(true)
+    assert_includes @board.render, "A . . . . \n"
+    assert_includes @board.render(true), "A S S S . \n"
     @board.cells["A1"].fire_upon
     @board.cells["B4"].fire_upon
-    @board.render
-    @board.render(true)
+    assert_includes @board.render, "A H . . . \n"
+    assert_includes @board.render(true), "A H S S . \n"
+    assert_includes @board.render, "B . . . M \n"
     @board.cells["C1"].fire_upon
     @board.cells["D1"].fire_upon
-    @board.render
-    @board.render(true)
+    assert_includes @board.render, "C X . . . \n"
+    assert_includes @board.render, "D X . . . \n"
   end
 
   def test_flexible_board_definition
