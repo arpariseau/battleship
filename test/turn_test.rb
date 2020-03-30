@@ -86,6 +86,16 @@ class TurnTest < Minitest::Test
     @turn.fire_output("A4")
   end
 
+  def test_start_can_run
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    cruiser2 = Ship.new("Cruiser", 3)
+    submarine2 = Ship.new("Submarine", 2)
+    @turn.computer_setup([cruiser2, submarine2])
+    @turn.setup([cruiser, submarine])
+    @turn.start
+  end
+
 
 
 end

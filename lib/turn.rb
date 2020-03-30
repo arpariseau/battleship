@@ -12,13 +12,20 @@ class Turn
   end
 
   def setup(ships)
-    p "I have laid out my ships on the grid."
     p "You now need to lay out your #{ships.length} ships."
     ships.each do |ship|
       player_placement(ship)
+    end
+  end
+
+  def computer_setup(ships)
+    p "I have laid out my ships on the grid."
+    ships.each do |ship|
       @computer.place_ship(ship)
     end
   end
+
+
 
   def player_placement(ship)
     p "The #{ship.name} is #{ship.length} units long."
@@ -37,6 +44,7 @@ class Turn
 
   def start
     until player_lost? || computer_lost?
+    binding.pry
     display_board
     player_shot = fire_input
     fire(player_shot)
@@ -45,12 +53,9 @@ class Turn
       break
     end
     display_board
+    fire_output_computer(@computer.attack)
 
-
-
-
-
-
+    end
   end
 
   def display_board
@@ -68,7 +73,7 @@ class Turn
   def fire_input
     p "Enter the coordinate for your shot:"
     coord = gets.chomp.upcase
-    if !@computer.board.cells[coord].valid_coordinate?
+    if !@computer.board.valid_coordinate?(coord)
       p "This coordinate doesn't exist."
       fire_input
     elsif @player_shots.include?(coord)
@@ -92,6 +97,17 @@ class Turn
       p "Your shot on #{coord} was a miss."
     end
   end
+
+  def fire_output_computer(coord)
+    @player_board.cells[coord].fire_upon
+      if @player_board.cells[coord].render == "X"
+        p "My shot on #{coord} sunk your #{@player_board.cells[coord].ship.name}."
+      elsif @player_board.cells[coord].render == "H"
+        p "My shot on #{coord} was a hit."
+      else
+        p "My shot on #{coord} was a miss."
+      end
+    end
 
 
   def player_lost?
