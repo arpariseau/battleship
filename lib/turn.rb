@@ -42,17 +42,11 @@ class Turn
   end
 
   def player_lost?
-    sunk_ships = @player_board.ships.keys.find_all do |key|
-      @player_board.ships[key].sunk?
-    end
-    @player_board.ships.keys == sunk_ships
+    @player_board.ships.values.map {|ship| ship.sunk?}.all?
   end
 
   def computer_lost?
-    sunk_ships = @computer.board.ships.keys.find_all do |key|
-      @computer.board.ships[key].sunk?
-    end
-    @computer.board.ships.keys == sunk_ships
+    @computer.board.ships.values.map {|ship| ship.sunk?}.all?
   end
 
 end
