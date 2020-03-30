@@ -61,4 +61,31 @@ class TurnTest < Minitest::Test
     assert_equal true, @turn.computer_lost?
   end
 
+  def test_player_can_fire
+    cruiser = Ship.new("Cruiser", 3)
+    @turn.computer.board.place(cruiser, ["A1", "A2", "A3"])
+    assert_equal ".", @turn.computer.board.cells["A1"].render
+    @turn.fire("A1")
+    assert_equal "H", @turn.computer.board.cells["A1"].render
+    @turn.fire("A2")
+    @turn.fire("A3")
+    assert_equal "X", @turn.computer.board.cells["A1"].render
+    @turn.fire("A4")
+    assert_equal "M", @turn.computer.board.cells["A4"].render
+  end
+
+  def test_fire_output
+    cruiser = Ship.new("Cruiser", 3)
+    @turn.computer.board.place(cruiser, ["A1", "A2", "A3"])
+    @turn.fire("A1")
+    @turn.fire_output("A1")
+    @turn.fire("A2")
+    @turn.fire("A3")
+    @turn.fire_output("A3")
+    @turn.fire("A4")
+    @turn.fire_output("A4")
+  end
+
+
+
 end

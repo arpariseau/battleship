@@ -55,4 +55,14 @@ class Computer
     @board.cells.keys.shuffle[0]
   end
 
+  def fire_output(coord)
+    if @computer.board.cells[coord].render == "X"
+      p "Your shot on #{coord} sunk my #{@computer.board.cells[coord].ship.name}."
+    elsif @computer.board.cells[coord].render == "H"
+      p "Your shot on #{coord} was a hit."
+    else
+      p "Your shot on #{coord} was a miss."
+    end
+  end
+
 end
