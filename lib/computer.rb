@@ -43,12 +43,11 @@ class Computer
 
   def attack
     target = get_random_coordinate
-    if valid_shot?(target)
-      @shots << target
-      target
-    else
-      attack
+    until valid_shot?(target)
+      target = get_random_coordinate
     end
+    @shots << target
+    target
   end
 
   def get_random_coordinate

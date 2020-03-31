@@ -80,19 +80,25 @@ class Turn
   def fire_input
     p "Enter the coordinate for your shot:"
     coord = gets.chomp.upcase
-    if !@computer.board.valid_coordinate?(coord)
-      p "This coordinate doesn't exist."
-      fire_input
-    elsif @player_shots.include?(coord)
-      p "This coordinate has already been fired upon."
-      p "Do you want to choose a different coordinate? (Y/N)"
-      input = gets.chomp.upcase
+    until @computer.board.valid_coordinate?(coord) && !@player_shots.include?(coord)
+      if !@computer.board.valid_coordinate?(coord)
+        p "This coordinate doesn't exist. Enter the coordinate for your shot:"
+        coord = gets.chomp.upcase
+      end
+      input = "N"
+      if @player_shots.include?(coord)
+        p "This coordinate has already been fired upon."
+        p "If you do not want to choose a new coordinate, press N"
+        input = gets.chomp.upcase
+      end
+      if input == "N"
+        return coord
+      else
+        p "Enter the new coordinate:"
+        coord = gets.chomp.upcase
+      end
     end
-    if input == "Y"
-      fire_input
-    else
-      coord
-    end
+    coord
   end
 
   def fire_output(coord)
