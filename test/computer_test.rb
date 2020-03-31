@@ -36,12 +36,12 @@ class ComputerTest < Minitest::Test
    @computer.board.render(true)
  end
 
- def test_gets_vert_array
-   assert_equal ["A1", "B1", "C1"], @computer.vert_place_check(3, "A1")
+ def test_creates_vert_array
+   assert_equal ["A1", "B1", "C1"], @computer.create_vert_coords(3, "A1")
  end
 
- def test_gets_horiz_array
-   assert_equal ["A1", "A2", "A3"], @computer.horiz_place_check(3, "A1")
+ def test_creates_horiz_array
+   assert_equal ["A1", "A2", "A3"], @computer.create_horiz_coords(3, "A1")
  end
 
  def test_can_validate_shot
