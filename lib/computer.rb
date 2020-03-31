@@ -11,7 +11,7 @@ class Computer
 
   def place_ship(ship)
     until @board.ships.include?(ship.name)
-      place_orient = rand(0..1)
+      place_orient = rand(2)
       start_coord = get_random_coordinate
       if place_orient == 0
         place_coords = create_horiz_coords(ship.length, start_coord)
@@ -45,14 +45,11 @@ class Computer
     target = get_random_coordinate
     if valid_shot?(target)
       @shots << target
+      target
     else
       attack
     end
-    target
   end
-
-
-
 
   def get_random_coordinate
     @board.cells.keys.shuffle[0]

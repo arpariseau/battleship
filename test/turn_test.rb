@@ -25,8 +25,9 @@ class TurnTest < Minitest::Test
     skip
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
-
-    @turn.setup([cruiser, submarine])
+    cruiser2 = Ship.new("Cruiser", 3)
+    submarine2 = Ship.new("Submarine", 2)
+    @turn.setup([cruiser, submarine], [cruiser2, submarine2])
     assert_equal 2, @turn.player_board.ships.length
     assert_equal 2, @turn.computer.board.ships.length
   end
@@ -75,6 +76,7 @@ class TurnTest < Minitest::Test
   end
 
   def test_fire_output
+    skip
     cruiser = Ship.new("Cruiser", 3)
     @turn.computer.board.place(cruiser, ["A1", "A2", "A3"])
     @turn.fire("A1")
@@ -91,11 +93,9 @@ class TurnTest < Minitest::Test
     submarine = Ship.new("Submarine", 2)
     cruiser2 = Ship.new("Cruiser", 3)
     submarine2 = Ship.new("Submarine", 2)
-    @turn.computer_setup([cruiser2, submarine2])
-    @turn.setup([cruiser, submarine])
-    @turn.start
+    @turn.setup_output([cruiser, submarine])
+    @turn.setup([cruiser, submarine], [cruiser2, submarine2])
+    @turn.player_turn
   end
-
-
 
 end

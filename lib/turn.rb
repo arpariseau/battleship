@@ -11,21 +11,19 @@ class Turn
     @player_shots = []
   end
 
-  def setup(ships)
-    p "You now need to lay out your #{ships.length} ships."
-    ships.each do |ship|
+  def setup(player_ships, computer_ships)
+    player_ships.each do |ship|
       player_placement(ship)
     end
-  end
-
-  def computer_setup(ships)
-    p "I have laid out my ships on the grid."
-    ships.each do |ship|
+    computer_ships.each do |ship|
       @computer.place_ship(ship)
     end
   end
 
-
+  def setup_output(ships)
+    p "I have laid out my ships on the grid."
+    p "You now need to lay out your #{ships.length} ships."
+  end
 
   def player_placement(ship)
     p "The #{ship.name} is #{ship.length} units long."
@@ -42,19 +40,28 @@ class Turn
     @player_board.place(ship, player_coord)
   end
 
-  def start
-    until player_lost? || computer_lost?
-    binding.pry
+  def player_turn
     display_board
     player_shot = fire_input
     fire(player_shot)
     fire_output(player_shot)
     if computer_lost?
-      break
+      p "You won!"
+    else
+      computer_turn
     end
-    display_board
-    fire_output_computer(@computer.attack)
+  end
 
+  def computer_turn
+    display_board
+    sleep(2.5)
+    computer_shot = @computer.attack
+    @player_board.cells[computer_shot].fire_upon
+    fire_output_computer(computer_shot)
+    if player_lost?
+      p "I won!"
+    else
+      player_turn
     end
   end
 
@@ -99,7 +106,6 @@ class Turn
   end
 
   def fire_output_computer(coord)
-    @player_board.cells[coord].fire_upon
       if @player_board.cells[coord].render == "X"
         p "My shot on #{coord} sunk your #{@player_board.cells[coord].ship.name}."
       elsif @player_board.cells[coord].render == "H"
@@ -108,7 +114,6 @@ class Turn
         p "My shot on #{coord} was a miss."
       end
     end
-
 
   def player_lost?
     @player_board.ships.values.map {|ship| ship.sunk?}.all?
