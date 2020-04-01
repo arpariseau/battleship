@@ -51,4 +51,30 @@ class MenuTest < Minitest::Test
     @menu.change_board_input
   end
 
+  def test_can_add_ships
+    @menu.add_ship("Battleship", 4)
+    assert_equal 3, @menu.ships.length
+    assert_equal "Battleship", @menu.ships[2].name
+    assert_equal 4, @menu.ships[2].length
+  end
+
+  def test_add_ship_input
+    skip
+    @menu.add_ship_input
+  end
+
+  def test_add_ship_input
+    skip
+    @menu.add_ship("Battleship", 4)
+    @menu.add_ship("Destroyer", 1)
+    @menu.add_ship_input
+  end
+
+  def test_remove_ship
+    @menu.remove_ship("Submarine")
+    assert_equal 1, @menu.ships.length
+    assert_equal "Cruiser", @menu.ships[0].name
+    assert_equal 3, @menu.ships[0].length
+  end
+
 end
