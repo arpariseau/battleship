@@ -35,18 +35,27 @@ class Menu
   end
 
   def change_board_input
+    p "Max board size that can be displayed is 10 x 10"
     p "Please enter the new board height:"
     new_height = gets.chomp.to_i
     p "Please enter the new board width:"
     new_width = gets.chomp.to_i
     board_size = new_height * new_width
-    until board_size > @ships.sum {|ship| ship.length}
-      p "The board is not big enough, please re-enter values."
+    can_fit_all_ships = (board_size > @ships.sum {|ship| ship.length})
+    not_longer_than_max = (new_height <= 10 && new_width <= 10)
+    ship_not_longer_than_height = @ships.max_by {|ship| ship.length}.length < new_height
+    ship_not_longer_than_width = @ships.max_by {|ship| ship.length}.length < new_width
+    until can_fit_all_ships && not_longer_than_max && ship_not_longer_than_height && ship_not_longer_than_width
+      p "The board cannot be made, please re-enter values."
       p "Please enter the new board height:"
       new_height = gets.chomp.to_i
       p "Please enter the new board width:"
       new_width = gets.chomp.to_i
       board_size = new_height * new_width
+      can_fit_all_ships = (board_size > @ships.sum {|ship| ship.length})
+      not_longer_than_max = (new_height <= 10 && new_width <= 10)
+      ship_not_longer_than_height = @ships.max_by {|ship| ship.length}.length < new_height
+      ship_not_longer_than_width = @ships.max_by {|ship| ship.length}.length < new_width
     end
     change_board_size(new_height, new_width)
   end
